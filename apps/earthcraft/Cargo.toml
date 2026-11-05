@@ -30,6 +30,7 @@ ab_glyph.workspace = true
 rstar.workspace = true
 sys-locale.workspace = true
 self_update.workspace = true
+serde_json.workspace = true
 
 # Native file/folder dialogs. Linux and FreeBSD use GTK3 without a desktop portal.
 [target.'cfg(any(target_os = "linux", target_os = "freebsd"))'.dependencies]

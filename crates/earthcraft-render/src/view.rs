@@ -173,13 +173,25 @@ mod tests {
     #[test]
     fn terrain_toggle_and_exaggeration_invalidate_presentation() {
         let mut view = RasterView {
-            camera: Cam { lat: 0.0, lon: 0.0, alt: 10.0, heading: 0.0 },
+            camera: Cam {
+                lat: 0.0,
+                lon: 0.0,
+                alt: 10.0,
+                heading: 0.0,
+            },
             model: earthcraft_core::earth_model::EarthModel::Wgs84,
-            width: 80, height: 60, aspect: 4.0 / 3.0,
-            provider: Provider::Satellite, release_index: 0,
-            grid: false, atmosphere: false, sunlight: false,
-            sky: false, cinematic_sky: false,
-            terrain: false, terrain_exaggeration: 1.0,
+            width: 80,
+            height: 60,
+            aspect: 4.0 / 3.0,
+            provider: Provider::Satellite,
+            release_index: 0,
+            grid: false,
+            atmosphere: false,
+            sunlight: false,
+            sky: false,
+            cinematic_sky: false,
+            terrain: false,
+            terrain_exaggeration: 1.0,
         };
         let flat = view.keys(120.0);
         view.terrain = true;

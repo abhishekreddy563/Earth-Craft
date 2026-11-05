@@ -178,7 +178,8 @@ impl App {
         let cfg = RenderCfg {
             sky,
             provider: prov,
-            terrain: (self.show_terrain && self.cam.alt <= 150.0
+            terrain: (self.show_terrain
+                && self.cam.alt <= 150.0
                 && self.explorer.active == earthcraft_core::body::Body::Earth)
                 .then_some(earthcraft_render::TerrainCfg {
                     exaggeration: self.terrain_exaggeration,

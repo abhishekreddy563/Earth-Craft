@@ -21,6 +21,9 @@ impl App {
                     ui.strong("🌍 EarthCraft");
                     #[cfg(not(target_os = "macos"))]
                     ui.menu_button("🌍 EarthCraft", |ui| self.in_window_menu(ui));
+                    if ui.button(lg.text("pulse-title")).clicked() {
+                        self.analysis.open = !self.analysis.open;
+                    }
                     if ui.button(lg.text("top-explore-action")).clicked() {
                         self.explorer.open = true;
                     }

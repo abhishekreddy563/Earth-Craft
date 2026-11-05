@@ -125,8 +125,10 @@ impl App {
         ui.checkbox(&mut self.show_terrain, lg.text("layers-terrain-toggle"));
         if self.show_terrain {
             ui.indent("terrain_controls", |ui| {
-                ui.add(egui::Slider::new(&mut self.terrain_exaggeration, 0.5..=3.0)
-                    .text(lg.text("layers-terrain-exaggeration")));
+                ui.add(
+                    egui::Slider::new(&mut self.terrain_exaggeration, 0.5..=3.0)
+                        .text(lg.text("layers-terrain-exaggeration")),
+                );
                 ui.weak(lg.text("layers-terrain-help"));
                 ui.hyperlink_to("© Mapterhorn", "https://mapterhorn.com/attribution");
             });

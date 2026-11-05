@@ -58,7 +58,10 @@ impl Address {
             .next()
             .and_then(|c| c.as_os_str().to_str())
             .ok_or_else(fail)?;
-        if !super::Provider::CACHE_ALL.iter().any(|p| p.dir() == provider) {
+        if !super::Provider::CACHE_ALL
+            .iter()
+            .any(|p| p.dir() == provider)
+        {
             return Err(fail());
         }
         let overview = provider == "esri_sat" && zoom <= 4;

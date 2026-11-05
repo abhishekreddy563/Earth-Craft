@@ -161,7 +161,8 @@ impl App {
             release_index: self.wayback_idx,
             grid: self.show_grid,
             atmosphere: self.show_atmo,
-            terrain: self.show_terrain && self.cam.alt <= 150.0
+            terrain: self.show_terrain
+                && self.cam.alt <= 150.0
                 && self.explorer.active == earthcraft_core::body::Body::Earth,
             terrain_exaggeration: self.terrain_exaggeration,
             sunlight: self.show_sun,
@@ -331,6 +332,7 @@ impl App {
             {
                 self.traffic.draw(&painter, geometry);
             }
+            self.analysis.paint(&painter, &display_basis, rect);
             self.draw_overlays(&painter, &display_basis, rect, display_cam.alt);
             self.draw_live_layers(
                 &painter,
@@ -452,6 +454,12 @@ impl App {
                     act = Some(1);
                     ui.close();
                 }
+                if self.explorer.active == earthcraft_core::body::Body::Earth
+                    && ui.button(lg.text("pulse-add-point")).clicked()
+                {
+                    act = Some(4);
+                    ui.close();
+                }
                 if ui.button(lg.text("globe-ruler-point-action")).clicked() {
                     act = Some(2);
                     ui.close();
@@ -487,6 +495,10 @@ impl App {
                 2 => {
                     self.ruler = true;
                     self.ruler_paths.add_point((la, lo), false);
+                }
+                4 => {
+                    self.analysis.add_point(la, lo);
+                    self.analysis.open = true;
                 }
                 _ => match self.settings.coordinate_display.format(la, lo) {
                     Ok(text) => ui.copy_text(text),

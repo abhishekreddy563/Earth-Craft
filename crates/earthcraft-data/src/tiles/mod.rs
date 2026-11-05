@@ -33,7 +33,11 @@ impl Provider {
     ];
     /// All cached providers, including the non-imagery elevation source.
     pub const CACHE_ALL: [Provider; 5] = [
-        Provider::Satellite, Provider::Wayback, Provider::Streets, Provider::Topo, Provider::TerrainDem,
+        Provider::Satellite,
+        Provider::Wayback,
+        Provider::Streets,
+        Provider::Topo,
+        Provider::TerrainDem,
     ];
     pub fn id(self) -> u64 {
         match self {
@@ -164,7 +168,6 @@ impl Tile {
         (self.w, self.h, &self.px)
     }
 
-
     /// Bilinear elevation in metres, decoded at each pixel *before* blending.
     /// Mapterhorn uses Terrarium: (R * 256 + G + B / 256) - 32768.
     pub fn sample_terrarium_m(&self, u: f64, v: f64) -> f64 {
@@ -225,8 +228,9 @@ mod sampling_tests {
         let tile = Tile {
             w: 2,
             h: 2,
-            px: vec![128,0,0,255, 131,232,0,255,
-                     128,0,0,255, 131,232,0,255],
+            px: vec![
+                128, 0, 0, 255, 131, 232, 0, 255, 128, 0, 0, 255, 131, 232, 0, 255,
+            ],
         };
         assert_eq!(tile.sample_terrarium_m(0.25, 0.5), 0.0);
         assert_eq!(tile.sample_terrarium_m(0.75, 0.5), 1000.0);

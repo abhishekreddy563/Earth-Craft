@@ -18,6 +18,7 @@ use std::{
     sync::{Arc, Mutex, mpsc},
     time::{Duration, Instant},
 };
+mod analysis;
 mod cache;
 mod controllers;
 mod explorer;
@@ -54,6 +55,7 @@ pub(crate) struct App {
     runtime: earthcraft_data::runtime::ServiceRuntime,
     updater: earthcraft_data::updater::UpdateService,
     update_restart: update_restart::UpdateRestart,
+    analysis: analysis::Analysis,
     explorer: explorer::Explorer,
     flat_earth: flat_earth::FlatEarth,
     boundary_loader: earthcraft_data::boundaries::BoundaryLoader,
@@ -223,6 +225,7 @@ impl App {
             update_restart: update_restart::UpdateRestart::new(restart.clone()),
             #[cfg(target_os = "macos")]
             native_menu: None,
+            analysis: analysis::Analysis::default(),
             explorer: explorer::Explorer::default(),
             flat_earth: flat_earth::FlatEarth::default(),
             lang,
@@ -513,6 +516,7 @@ impl eframe::App for App {
         self.settings_window(ui);
         self.menu_windows(ui);
         self.explorer_window(ui);
+        self.analysis_window(ui);
         self.altitude_window(ui);
         self.ruler_points_window(ui);
         self.live_maps

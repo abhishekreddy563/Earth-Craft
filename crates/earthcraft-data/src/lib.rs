@@ -1,6 +1,7 @@
 //! Map services and persistence. Background loaders report values to the desktop app.
 #![forbid(unsafe_code)]
 pub mod aircraft;
+pub mod analysis;
 pub mod boundaries;
 mod error;
 mod http;

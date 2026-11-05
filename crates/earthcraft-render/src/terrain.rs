@@ -27,11 +27,14 @@ fn height_at(
         let tx = (u * n).floor().min(n - 1.0);
         let ty = (v * n).floor().min(n - 1.0);
         let key = make_key(Provider::TerrainDem, level as u8, tx as u32, ty as u32, 0);
-        let tile = loc.map.entry(key).or_insert_with(|| match (loc.lookup)(key) {
-            Lookup::Ready(tile) => LocalTile::Ready(tile),
-            Lookup::Pending => LocalTile::Pending,
-            Lookup::Absent => LocalTile::Absent(dist),
-        });
+        let tile = loc
+            .map
+            .entry(key)
+            .or_insert_with(|| match (loc.lookup)(key) {
+                Lookup::Ready(tile) => LocalTile::Ready(tile),
+                Lookup::Pending => LocalTile::Pending,
+                Lookup::Absent => LocalTile::Absent(dist),
+            });
         match tile {
             LocalTile::Ready(tile) => {
                 return Some((tile.sample_terrarium_m(u * n - tx, v * n - ty), level));
@@ -64,7 +67,9 @@ pub(super) fn displace(
     cfg: &RenderCfg,
     loc: &mut Local<impl Fn(TileKey) -> Lookup>,
 ) -> (rays::RaySample, f32) {
-    let Some(terrain) = cfg.terrain else { return (*ray, 1.0) };
+    let Some(terrain) = cfg.terrain else {
+        return (*ray, 1.0);
+    };
     if ray.incidence < 0.18 {
         return (*ray, 1.0);
     }
@@ -104,9 +109,11 @@ pub(super) fn displace(
     let actual_z = height_sample.1;
     let tile_step = 1.0 / (DEM_TILE_EDGE * (1u64 << actual_z) as f64);
     let east_h = height_at(loc, actual_z, u + tile_step, v, dist)
-        .map(|h| h.0).unwrap_or(elevation_m);
+        .map(|h| h.0)
+        .unwrap_or(elevation_m);
     let south_h = height_at(loc, actual_z, u, v + tile_step, dist)
-        .map(|h| h.0).unwrap_or(elevation_m);
+        .map(|h| h.0)
+        .unwrap_or(elevation_m);
     let coslat = adjusted.normal.z.acos().sin().max(0.015);
     let horizontal_m = 2.0 * PI * EARTH_RADIUS_M * coslat * tile_step;
     let slope_e = ((east_h - elevation_m) / horizontal_m * exaggeration).clamp(-5.0, 5.0);

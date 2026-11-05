@@ -1164,6 +1164,7 @@ dependencies = [
  "rfd",
  "rstar",
  "self_update",
+ "serde_json",
  "sys-locale",
  "wgpu",
 ]

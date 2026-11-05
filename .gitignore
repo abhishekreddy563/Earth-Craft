@@ -1,16 +1,20 @@
-# Rust build output
-/target/
-/dist/
+.build/
+.venv/
+.state/
+.pytest_cache/
 __pycache__/
+*.pyc
+.env
+!.env.example
+**/target/
+/dist/
 **/*.rs.bk
-
-# Local editor files
+*.profraw
+/cargo-out/
 .idea/
 *.swp
 *.swo
 *~
-
-# Operating system files
 .DS_Store
 Thumbs.db
 Desktop.ini
